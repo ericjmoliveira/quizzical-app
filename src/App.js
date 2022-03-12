@@ -22,10 +22,39 @@ function App() {
         },
     ];
 
+    const questionAnswers = [
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+    ];
+
     const [quiz, setQuiz] = useState(false);
     const [newGame, setNewGame] = useState(true);
     const [checkButton, setCheckButton] = useState(true);
     const [questionsList, setQuestionsList] = useState([]);
+    const [answers, setAnswers] = useState(questionAnswers);
+    const [score, setScore] = useState(0);
+
+    function getAnswers(index, userAnswer, correctAnswer) {
+        let newAnswers = [...answers];
+        let newPairAnswer = { ...newAnswers[index] };
+        newPairAnswer.user = userAnswer;
+        newPairAnswer.correct = correctAnswer;
+        newAnswers[index] = newPairAnswer;
+
+        setAnswers(newAnswers);
+    }
+
+    function checkScore() {
+        setCheckButton((prevCheckButton) => !prevCheckButton);
+        for (let i = 0; i < answers.length; i++) {
+            if (answers[i].user === answers[i].correct) {
+                setScore((prevScore) => prevScore + 1);
+            }
+        }
+    }
 
     useEffect(() => {
         fetch("https://opentdb.com/api.php?amount=5&type=multiple")
@@ -45,25 +74,23 @@ function App() {
                 return (
                     <Question
                         key={uuidv4()}
+                        index={questionsList.indexOf(question)}
                         title={question.question}
                         correctOption={question.correct_answer}
                         incorrectOptions={question.incorrect_answers}
+                        handleAnswers={getAnswers}
                     />
                 );
             })}
             {checkButton ? (
-                <Button
-                    type="check-answers"
-                    handleClick={() => {
-                        setCheckButton((prevCheckButton) => !prevCheckButton);
-                        console.log("Checking answers");
-                    }}
-                >
+                <Button type="check-answers" handleClick={checkScore}>
                     Check answers
                 </Button>
             ) : (
                 <div className="score-container">
-                    <p className="score">You scored 3/5 correct answers</p>
+                    <p className="score">
+                        You scored {score}/5 correct answers
+                    </p>
                     <Button
                         type="play-again"
                         handleClick={() => {
@@ -71,6 +98,7 @@ function App() {
                             setCheckButton(
                                 (prevCheckButton) => !prevCheckButton
                             );
+                            setScore(0);
                             console.log("Play again");
                         }}
                     >

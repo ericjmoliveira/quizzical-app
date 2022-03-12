@@ -44,9 +44,3 @@
 .options-container button:last-child {
     margin-right: 0;
 }
-
-.options-container button:hover {
-    border: none;
-    background-color: #d6dbf5;
-    transition: ease 0.25s;
-}
