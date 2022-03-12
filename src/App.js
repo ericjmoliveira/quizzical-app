@@ -22,7 +22,9 @@ function App() {
         },
     ];
 
-    const [quiz, setQuiz] = useState();
+    const [quiz, setQuiz] = useState(false);
+    const [newGame, setNewGame] = useState(true);
+    const [checkButton, setCheckButton] = useState(true);
     const [questionsList, setQuestionsList] = useState([]);
 
     useEffect(() => {
@@ -30,7 +32,7 @@ function App() {
             .then((response) => response.json())
             .then((data) => setQuestionsList(data.results))
             .catch((error) => console.log(error));
-    }, [quiz]);
+    }, [newGame]);
 
     function startQuiz() {
         setQuiz((prevQuiz) => !prevQuiz);
@@ -49,12 +51,33 @@ function App() {
                     />
                 );
             })}
-            <Button
-                type="check-answers"
-                handleClick={(e) => console.log("Checking answers")}
-            >
-                Check answers
-            </Button>
+            {checkButton ? (
+                <Button
+                    type="check-answers"
+                    handleClick={() => {
+                        setCheckButton((prevCheckButton) => !prevCheckButton);
+                        console.log("Checking answers");
+                    }}
+                >
+                    Check answers
+                </Button>
+            ) : (
+                <div className="score-container">
+                    <p className="score">You scored 3/5 correct answers</p>
+                    <Button
+                        type="play-again"
+                        handleClick={() => {
+                            setNewGame((prevNewGame) => !prevNewGame);
+                            setCheckButton(
+                                (prevCheckButton) => !prevCheckButton
+                            );
+                            console.log("Play again");
+                        }}
+                    >
+                        Play again
+                    </Button>
+                </div>
+            )}
         </div>
     );
 

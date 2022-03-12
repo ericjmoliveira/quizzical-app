@@ -17,3 +17,25 @@
     align-items: center;
     justify-content: space-evenly;
 }
+
+.score-container {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.score {
+    font-family: "Inter", sans-serif;
+    font-size: 12.8px;
+    font-weight: 700;
+    color: #293264;
+    margin-right: 20px;
+}
+
+.loading {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #293264;
+}

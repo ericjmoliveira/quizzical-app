@@ -1,11 +1,12 @@
 .question-container {
     width: 500px;
+    min-height: max-content;
     display: flex;
     flex-direction: column;
     align-items: space-between;
     justify-content: center;
     border-bottom: 0.79px solid #dbdef0;
-    padding: 5px 0;
+    padding: 10px 0;
 }
 
 .question-title {

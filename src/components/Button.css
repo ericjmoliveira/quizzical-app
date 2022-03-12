@@ -24,3 +24,16 @@
     margin-top: 30px;
     cursor: pointer;
 }
+
+.play-again {
+    width: 104px;
+    height: 30px;
+    background-color: #4d5b9e;
+    color: #f5f7fb;
+    font-family: "Inter", sans-serif;
+    font-size: 10.24px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
