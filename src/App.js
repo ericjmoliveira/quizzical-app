@@ -13,6 +13,7 @@ import bottomBlobSmall from "./assets/bottom-blob-small.png";
 import "./App.css";
 
 function App() {
+    // Backgrounds
     const backgrounds = [
         {
             backgroundImage: `url(${topBlob}), url(${bottomBlob})`,
@@ -22,6 +23,7 @@ function App() {
         },
     ];
 
+    // questionAnswers
     const questionAnswers = [
         { user: "", correct: "" },
         { user: "", correct: "" },
@@ -30,13 +32,28 @@ function App() {
         { user: "", correct: "" },
     ];
 
+    // States handling
     const [quiz, setQuiz] = useState(false);
-    const [newGame, setNewGame] = useState(true);
-    const [checkButton, setCheckButton] = useState(true);
     const [questionsList, setQuestionsList] = useState([]);
     const [answers, setAnswers] = useState(questionAnswers);
+    const [checkButton, setCheckButton] = useState(true);
     const [score, setScore] = useState(0);
+    const [newGame, setNewGame] = useState(true);
 
+    // Fetch questions from the OTDB API
+    useEffect(() => {
+        fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+            .then((response) => response.json())
+            .then((data) => setQuestionsList(data.results))
+            .catch((error) => console.log(error));
+    }, [newGame]);
+
+    // Switches to the quiz page
+    function startQuiz() {
+        setQuiz((prevQuiz) => !prevQuiz);
+    }
+
+    // Get answers from the questions components
     function getAnswers(index, userAnswer, correctAnswer) {
         let newAnswers = [...answers];
         let newPairAnswer = { ...newAnswers[index] };
@@ -47,6 +64,7 @@ function App() {
         setAnswers(newAnswers);
     }
 
+    // Check score
     function checkScore() {
         setCheckButton((prevCheckButton) => !prevCheckButton);
         for (let i = 0; i < answers.length; i++) {
@@ -56,17 +74,14 @@ function App() {
         }
     }
 
-    useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-            .then((response) => response.json())
-            .then((data) => setQuestionsList(data.results))
-            .catch((error) => console.log(error));
-    }, [newGame]);
-
-    function startQuiz() {
-        setQuiz((prevQuiz) => !prevQuiz);
+    // Restart the game
+    function playAgain() {
+        setNewGame((prevNewGame) => !prevNewGame);
+        setCheckButton((prevCheckButton) => !prevCheckButton);
+        setScore(0);
     }
 
+    // Render the intro and quiz pages
     const introPage = <IntroPage startButtonHandler={startQuiz} />;
     const quizPage = (
         <div className="questions-container">
@@ -91,17 +106,7 @@ function App() {
                     <p className="score">
                         You scored {score}/5 correct answers
                     </p>
-                    <Button
-                        type="play-again"
-                        handleClick={() => {
-                            setNewGame((prevNewGame) => !prevNewGame);
-                            setCheckButton(
-                                (prevCheckButton) => !prevCheckButton
-                            );
-                            setScore(0);
-                            console.log("Play again");
-                        }}
-                    >
+                    <Button type="play-again" handleClick={playAgain}>
                         Play again
                     </Button>
                 </div>
