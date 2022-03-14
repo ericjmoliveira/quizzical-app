@@ -16,27 +16,24 @@ function App() {
     // Backgrounds
     const backgrounds = [
         {
-            backgroundImage: `url(${topBlob}), url(${bottomBlob})`,
+            backgroundImage: `url(${topBlob}), url(${bottomBlob})`
         },
         {
-            backgroundImage: `url(${topBlobSmall}), url(${bottomBlobSmall})`,
-        },
+            backgroundImage: `url(${topBlobSmall}), url(${bottomBlobSmall})`
+        }
     ];
 
-    // questionAnswers
-    const questionAnswers = [
-        { user: "", correct: "" },
-        { user: "", correct: "" },
-        { user: "", correct: "" },
-        { user: "", correct: "" },
-        { user: "", correct: "" },
-    ];
-
-    // States handling
+    // Handle the necessary states
     const [quiz, setQuiz] = useState(false);
     const [questionsList, setQuestionsList] = useState([]);
-    const [answers, setAnswers] = useState(questionAnswers);
-    const [checkButton, setCheckButton] = useState(true);
+    const [answers, setAnswers] = useState([
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" },
+        { user: "", correct: "" }
+    ]);
+    const [checkButton, setCheckButton] = useState(false);
     const [score, setScore] = useState(0);
     const [newGame, setNewGame] = useState(true);
 
@@ -53,18 +50,18 @@ function App() {
         setQuiz((prevQuiz) => !prevQuiz);
     }
 
-    // Get answers from the questions components
+    // Gets answers from the questions components
     function getAnswers(index, userAnswer, correctAnswer) {
         let newAnswers = [...answers];
-        let newPairAnswer = { ...newAnswers[index] };
-        newPairAnswer.user = userAnswer;
-        newPairAnswer.correct = correctAnswer;
-        newAnswers[index] = newPairAnswer;
+        let answerPair = { ...newAnswers[index] };
+        answerPair.user = userAnswer;
+        answerPair.correct = correctAnswer;
+        newAnswers[index] = answerPair;
 
         setAnswers(newAnswers);
     }
 
-    // Check score
+    // Checks the score
     function checkScore() {
         setCheckButton((prevCheckButton) => !prevCheckButton);
         for (let i = 0; i < answers.length; i++) {
@@ -74,14 +71,14 @@ function App() {
         }
     }
 
-    // Restart the game
+    // Restarts the game
     function playAgain() {
         setNewGame((prevNewGame) => !prevNewGame);
         setCheckButton((prevCheckButton) => !prevCheckButton);
         setScore(0);
     }
 
-    // Render the intro and quiz pages
+    // Renders the intro and quiz pages
     const introPage = <IntroPage startButtonHandler={startQuiz} />;
     const quizPage = (
         <div className="questions-container">
@@ -97,15 +94,13 @@ function App() {
                     />
                 );
             })}
-            {checkButton ? (
+            {!checkButton ? (
                 <Button type="check-answers" handleClick={checkScore}>
                     Check answers
                 </Button>
             ) : (
                 <div className="score-container">
-                    <p className="score">
-                        You scored {score}/5 correct answers
-                    </p>
+                    <p className="score">You scored {score}/5 correct answers</p>
                     <Button type="play-again" handleClick={playAgain}>
                         Play again
                     </Button>
