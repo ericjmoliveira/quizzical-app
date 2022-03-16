@@ -1,8 +1,8 @@
 import "./Question.css";
 
 function Question({ index, title, options, handleStyle, handleAnswers, checkState }) {
-    // Send answers to the App component
-    function sendAnswers(e) {
+    // Send answer to the App component
+    function sendAnswer(e) {
         const userOption = e.target.textContent;
         handleAnswers(index, userOption);
     }
@@ -14,25 +14,25 @@ function Question({ index, title, options, handleStyle, handleAnswers, checkStat
             </div>
             <div className="options-container">
                 <button
-                    onClick={!checkState ? sendAnswers : undefined}
+                    onClick={!checkState ? sendAnswer : undefined}
                     style={handleStyle(index, options[0])}
                 >
                     {options[0]}
                 </button>
                 <button
-                    onClick={!checkState ? sendAnswers : undefined}
+                    onClick={!checkState ? sendAnswer : undefined}
                     style={handleStyle(index, options[1])}
                 >
                     {options[1]}
                 </button>
                 <button
-                    onClick={!checkState ? sendAnswers : undefined}
+                    onClick={!checkState ? sendAnswer : undefined}
                     style={handleStyle(index, options[2])}
                 >
                     {options[2]}
                 </button>
                 <button
-                    onClick={!checkState ? sendAnswers : undefined}
+                    onClick={!checkState ? sendAnswer : undefined}
                     style={handleStyle(index, options[3])}
                 >
                     {options[3]}

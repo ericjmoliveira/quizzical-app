@@ -68,6 +68,7 @@ function App() {
     function decodeEntities(text) {
         const textArea = document.createElement("textArea");
         textArea.innerHTML = text;
+
         return textArea.value;
     }
 
@@ -101,11 +102,6 @@ function App() {
         if (noneAboveCheck) return optionStyles[4];
     }
 
-    // Switches to the quiz page
-    function startQuiz() {
-        setQuiz((prevQuiz) => !prevQuiz);
-    }
-
     // Gets user answer from the questions components
     function getUserAnswer(index, userOption) {
         const newUserAnswers = [...userAnswers];
@@ -132,9 +128,9 @@ function App() {
         setScore(0);
     }
 
-    const introPage = <IntroPage startButtonHandler={startQuiz} />;
+    const introPage = <IntroPage handleQuizStart={setQuiz} />;
     const quizPage = loading ? (
-        <p className="loading">Loading...</p>
+        <p className="loading">Loading questions...</p>
     ) : (
         <div className="questions-container">
             {questionsList.map((question) => {
