@@ -19,9 +19,9 @@ function App() {
         { backgroundImage: `url(${topBlobSmall}), url(${bottomBlobSmall})` },
     ];
 
-    // States
     const [quiz, setQuiz] = useState(false);
     const [rawData, setRawData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [questionsList, setQuestionsList] = useState([]);
     const [userAnswers, setUserAnswers] = useState(["", "", "", ""]);
     const [checkStart, setCheckStart] = useState(false);
@@ -57,15 +57,14 @@ function App() {
                 newQuestionList[i] = newQuestionObj;
             }
 
-            console.log(newQuestionList);
-
             setQuestionsList(newQuestionList);
+            setLoading(false);
         }
 
         shuffleOptions();
     }, [rawData]);
 
-    // Decodes HTML entities in the text given
+    // Decodes HTML entities
     function decodeEntities(text) {
         const textArea = document.createElement("textArea");
         textArea.innerHTML = text;
@@ -73,30 +72,33 @@ function App() {
     }
 
     // Styles to be applied in the option buttons
-    const optStyles = [
+    const optionStyles = [
         { backgroundColor: "inherit", border: "1px solid #4d5b9e" }, // Default
-        { backgroundColor: "#d6dBf5", border: "none" }, // Selected
-        { backgroundColor: "#94d7a2", border: "none" }, // Correct
-        { backgroundColor: "#f8bcbc", border: "none" }, // Wrong
-        { backgroundColor: "inherit", border: "1px solid #4d5b9e", opacity: 0.5 }, // None
+        { backgroundColor: "#d6dBf5", border: "none", cursor: "auto" }, // Selected
+        { backgroundColor: "#94d7a2", border: "none", cursor: "auto" }, // Correct
+        { backgroundColor: "#f8bcbc", border: "none", cursor: "auto" }, // Wrong
+        { backgroundColor: "inherit", border: "1px solid #4d5b9e", opacity: 0.5, cursor: "auto" }, // None of the above
     ];
 
     // Handles the style of the option buttons
-    function setStyling(index, opt) {
-        // Boolean variables to be used in the conditionals
+    function setOptionStyle(index, option) {
         const defaultCheck = !checkStart && userAnswers[index] === "";
-        const selectedCheck = !checkStart && userAnswers[index] === opt;
-        const correctCheck = checkStart && questionsList[index].correct_answer === opt;
+        const selectedCheck = !checkStart && userAnswers[index] === option;
+        const correctCheck = checkStart && questionsList[index].correct_answer === option;
         const wrongCheck =
-            checkStart && questionsList[index].correct_answer !== opt && opt === userAnswers[index];
+            checkStart &&
+            questionsList[index].correct_answer !== option &&
+            option === userAnswers[index];
         const noneAboveCheck =
-            checkStart && opt !== userAnswers[index] && opt !== questionsList[index].correct_answer;
+            checkStart &&
+            option !== userAnswers[index] &&
+            option !== questionsList[index].correct_answer;
 
-        if (defaultCheck) return optStyles[0];
-        if (selectedCheck) return optStyles[1];
-        if (correctCheck) return optStyles[2];
-        if (wrongCheck) return optStyles[3];
-        if (noneAboveCheck) return optStyles[4];
+        if (defaultCheck) return optionStyles[0];
+        if (selectedCheck) return optionStyles[1];
+        if (correctCheck) return optionStyles[2];
+        if (wrongCheck) return optionStyles[3];
+        if (noneAboveCheck) return optionStyles[4];
     }
 
     // Switches to the quiz page
@@ -125,13 +127,15 @@ function App() {
     // Restarts the game
     function playAgain() {
         setNewGame((prevNewGame) => !prevNewGame);
+        setLoading(true);
         setCheckStart((prevCheckButton) => !prevCheckButton);
         setScore(0);
     }
 
-    // Renders the intro and quiz pages
     const introPage = <IntroPage startButtonHandler={startQuiz} />;
-    const quizPage = (
+    const quizPage = loading ? (
+        <p className="loading">Loading...</p>
+    ) : (
         <div className="questions-container">
             {questionsList.map((question) => {
                 return (
@@ -140,7 +144,7 @@ function App() {
                         index={questionsList.indexOf(question)}
                         title={question.question}
                         options={question.options}
-                        handleStyle={setStyling}
+                        handleStyle={setOptionStyle}
                         handleAnswers={getUserAnswer}
                     />
                 );
