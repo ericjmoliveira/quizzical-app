@@ -4,4 +4,4 @@ Solo project proposed in the freeCodeCamp React course on YouTube | https://www.
 
 A quiz app in React using the Open Trivia Database API.
 
-Play in https://ericjmoliveira.github.io/quizzical-trivia
+Play here: https://ericjmoliveira.github.io/quizzical-trivia
