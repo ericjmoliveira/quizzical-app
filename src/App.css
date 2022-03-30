@@ -11,14 +11,14 @@
 	margin: 25px auto;
 }
 
-.questions-container {
+.questions__container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
 }
 
-.score-container {
+.score__container {
 	margin: 20px 0;
 	display: flex;
 	align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .score {
-	font-family: "Inter", sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 12.8px;
 	font-weight: 700;
 	color: #293264;
@@ -34,7 +34,7 @@
 }
 
 .loading {
-	font-family: "Inter", sans-serif;
+	font-family: 'Inter', sans-serif;
 	font-size: 20px;
 	font-weight: 700;
 	color: #293264;
