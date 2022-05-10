@@ -1,0 +1,14 @@
+@import '../sass/variables';
+@import '../sass/mixins';
+
+.intro__title {
+    @include font-config('Karla', 31.25px, 700);
+    color: $font-color;
+    margin-bottom: 10px;
+}
+
+.intro__description {
+    @include font-config('Inter', 16px, 400);
+    color: $font-color;
+    margin-bottom: 30px;
+}

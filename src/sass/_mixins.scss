@@ -1,0 +1,17 @@
+@mixin flex-display($direction: row, $align: stretch, $justify: stretch) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin font-config($family: sans-serif, $size, $weight) {
+    font-family: $family;
+    font-size: $size;
+    font-weight: $weight;
+}
+
+@mixin border-config($display, $radius) {
+    border: $display;
+    border-radius: $radius;
+}

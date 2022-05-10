@@ -1,0 +1,35 @@
+@import '../sass/variables';
+@import '../sass/mixins';
+
+.button {
+    background-color: $button-bg-color;
+    color: $bg-color;
+}
+
+.start-quiz {
+    width: 193px;
+    height: 52px;
+    @extend .button;
+    @include font-config('Inter', 16px, 500);
+    @include border-config(none, 15px);
+    cursor: pointer;
+}
+
+.check-answers {
+    width: 120px;
+    height: 35px;
+    @extend .button;
+    @include font-config('Inter', 10.24px, 600);
+    @include border-config(none, 10px);
+    cursor: pointer;
+    margin: 30px 0;
+}
+
+.play-again {
+    width: 104px;
+    height: 30px;
+    @extend .button;
+    @include font-config('Inter', 10.24px, 600);
+    @include border-config(none, 10px);
+    cursor: pointer;
+}

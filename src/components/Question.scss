@@ -1,0 +1,43 @@
+@import '../sass/variables';
+@import '../sass/mixins';
+
+.question__container {
+    width: 500px;
+    min-height: max-content;
+    @include flex-display(column, space-between, center);
+    border-bottom: 0.79px solid $border-color;
+    padding: 10px 0;
+
+    .question__title {
+        @include font-config('Karla', 16px, 700);
+        color: $font-color;
+        margin: 5px 0;
+    }
+
+    .options__container {
+        @include flex-display($justify: flex-start);
+        margin: 5px 0;
+
+        button {
+            width: 100px;
+            min-height: fit-content;
+            @include flex-display($align: center, $justify: center);
+            @include font-config('Inter', 10.24px, 500);
+            color: $font-color;
+            background-color: inherit;
+            @include border-config(1px solid $button-bg-color, 8px);
+            margin-right: 25px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+    }
+}
+
+/* Media queries */
+
+@media screen and (max-width: 480px) {
+    .question__container {
+        max-width: 360px;
+        padding: 20px 0;
+    }
+}

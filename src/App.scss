@@ -1,0 +1,42 @@
+@import './sass/variables';
+@import './sass/mixins';
+
+.App {
+    width: 700px;
+    min-height: 600px;
+    @include flex-display(column, center, center);
+    background-color: $bg-color;
+    background-repeat: no-repeat, no-repeat;
+    background-position: top right, bottom left;
+    margin: 25px auto;
+
+    .questions__container {
+        @include flex-display(column, center, space-evenly);
+    }
+
+    .score__container {
+        margin: 20px 0;
+        @include flex-display($align: center, $justify: space-between);
+
+        .score {
+            @include font-config('Inter', 12.8px, 700);
+            color: $font-color;
+            margin-right: 20px;
+        }
+    }
+
+    .loading {
+        @include font-config('Inter', 20px, 700);
+        color: $font-color;
+    }
+}
+
+/* Media queries */
+
+@media screen and (max-width: 480px) {
+    .App {
+        max-width: 100vw;
+        min-height: 100vh;
+        margin: auto 0;
+    }
+}
